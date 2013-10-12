@@ -63,7 +63,7 @@
     -->
 
     <!-- Define app icon for each platform. -->
-    <icon src="iconemm.png" />
+    <icon src="icon.png" />
 	<icon src="res/icon/Icon.png"           		gap:platform="ios"        width="57" height="57" />
 	<icon src="res/icon/Icon-72.png"           		gap:platform="ios"        width="72" height="72" />
     <icon src="res/icon/AppIcon76x76.png"           gap:platform="ios"        width="76" height="76" />
@@ -96,7 +96,7 @@
 	<access origin="http://cdn.syndication.twimg.com" />
 	<access origin="http://eindhovenmetalmeeting.nl" />
     <access origin="http://www.jaegermeister.nl/" />
-	<access origin="http://www.large.nl/ />
+	<access origin="http://www.large.nl/" />
 	<access origin="http://www.aardschok.com/" />
 	<access origin="http://www.metal-hammer.de/" />
 	<access origin="http://www.legacy.de/" />
