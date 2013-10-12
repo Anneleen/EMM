@@ -1,0 +1,601 @@
+<!DOCTYPE html> 
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+	
+	<title>Eindhoven Metal Meeting 2013</title>
+	<link rel="stylesheet" href="themes/emm.min.css"/>
+	<script type="text/javascript" src="jquery/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" src="jquery/jquery.mobile-1.2.0.min.js"></script>
+	<script stype="text/javascript" src="phonegap.js"></script> 
+	
+	<script src="jquery/jquery.imagesloaded.min.js"></script>
+	<script src="jquery/imgcache.js"></script>
+	
+	<script>
+		var startTest = function() {
+			$('body').imagesLoaded(function($images, $proper, $broken ) {
+
+				// see console output for debug info
+				ImgCache.options.debug = true;
+				ImgCache.options.usePersistentCache = true;
+	
+				ImgCache.init(function() {
+					// 1. cache images
+					for (var i = 0; i < $proper.length; i++) {
+						ImgCache.cacheFile($($proper[i]).attr('src'));
+					}
+					// 2. broken images get replaced
+					for (var i = 0; i < $broken.length; i++) {
+						ImgCache.useCachedFile($($broken[i]));
+					}
+
+				});
+			});
+		};
+
+		if (typeof(cordova) !== 'undefined') {
+			// cordova test
+			document.addEventListener('deviceready', startTest, false);
+		} else {
+			// normal browser test
+			$(document).ready(startTest);
+		}
+	</script>
+		
+	<script>
+    function checkConnection() {
+        var networkState = navigator.connection.type;
+
+		if (networkState == Connection.UNKNOWN || networkState == Connection.NONE || networkState == Connection.ETHERNET || networkState == Connection.CELL_2G){
+		window.location = "#nowifi";
+		}
+		else{
+		window.location = "http://eindhovenmetalmeeting.nl/anneleen/emm-twitter.html";
+		};
+    }
+    </script>
+    
+	<script type="text/javascript" charset="utf-8">
+	var pathScheduleF;
+
+	//Loaded my file system, now let's get a directory entry for where I'll store my crap    
+	function onFSSuccess(fileSystem) {
+		pathScheduleF = fileSystem.root.fullPath+'/be.emm.mobile/schedule.json';
+		fileSystem.root.getDirectory("be.emm.mobile",{create:true},loadFunctions,onError);
+	}
+
+
+	//Result of reading my directory
+	function loadFunctions() {
+			loadScheduleL();
+			loadScheduleJ();
+			loadScheduleLF();
+			loadScheduleJF();
+			loadScheduleDF();
+			loadScheduleRF();
+			loadScheduleLS();
+			loadScheduleJS();
+			loadScheduleRS();
+			loadScheduleDS();
+	}
+	
+	function loadScheduleL() {
+			var request = new XMLHttpRequest();
+			request.open("GET", pathScheduleF, true);
+			request.onreadystatechange = function() {//Call a function when the state changes.
+			if (request.readyState == 4) {
+				if (request.status == 200 || request.status == 0) {
+	  
+				var schedule = JSON.parse(request.responseText);
+				var data = "<table id='large' data-role='table'>";
+			for (i = 0; i < schedule.length; i++) {
+				if (schedule[i].stage == "Large" && schedule[i].dag == "afb") {
+				data += "<tr><th><img src='" + schedule[i].band + "' class='stage'>";
+				}
+				if (schedule[i].stage == "Large" && schedule[i].dag == "do") {
+				data += "<tr><td>" + schedule[i].uur + "<br>" + schedule[i].band + "</td></tr>";
+				}
+			}
+			data += "</table>";
+			var schedule = document.getElementById("large");
+			schedule.innerHTML = data;
+			}
+		}
+		}
+		console.log("asking for schedule");
+		request.send();
+	}
+
+	function loadScheduleJ() {
+			var request = new XMLHttpRequest();
+			request.open("GET", pathScheduleF, true);
+			request.onreadystatechange = function() {//Call a function when the state changes.
+			if (request.readyState == 4) {
+				if (request.status == 200 || request.status == 0) {
+	  
+				var schedule = JSON.parse(request.responseText);
+				var data = "<table id='jager' data-role='table'>";
+			for (i = 0; i < schedule.length; i++) {
+				if (schedule[i].stage == "Jager" && schedule[i].dag == "afb") {
+				data += "<tr><th><img src='" + schedule[i].band + "' class='stage'>";
+				}
+				if (schedule[i].stage == "Jager" && schedule[i].dag == "do") {
+				data += "<tr><td>" + schedule[i].uur + "<br>" + schedule[i].band + "</td></tr>";
+				}
+			}
+			data += "</table>";
+			var schedule = document.getElementById("jager");
+			schedule.innerHTML = data;
+			}
+		}
+		}
+		console.log("asking for schedule");
+		request.send();
+	}
+	
+	function loadScheduleLF() {
+			var request = new XMLHttpRequest();
+			request.open("GET", pathScheduleF, true);
+			request.onreadystatechange = function() {//Call a function when the state changes.
+			if (request.readyState == 4) {
+				if (request.status == 200 || request.status == 0) {
+	  
+				var schedule = JSON.parse(request.responseText);
+				var data = "<table id='large' data-role='table'>";
+			for (i = 0; i < schedule.length; i++) {
+				if (schedule[i].stage == "Large" && schedule[i].dag == "afb") {
+				data += "<tr><th><img src='" + schedule[i].band + "' class='stage'>";
+				}
+				if (schedule[i].stage == "Large" && schedule[i].dag == "vr") {
+				data += "<tr><td>" + schedule[i].uur + "<br>" + schedule[i].band + "</td></tr>";
+				}
+			}
+			data += "</table>";
+			var schedule = document.getElementById("vrlarge");
+			schedule.innerHTML = data;
+			}
+		}
+		}
+		console.log("asking for schedule");
+		request.send();
+	}
+	
+	function loadScheduleJF() {
+			var request = new XMLHttpRequest();
+			request.open("GET", pathScheduleF, true);
+			request.onreadystatechange = function() {//Call a function when the state changes.
+			if (request.readyState == 4) {
+				if (request.status == 200 || request.status == 0) {
+	  
+				var schedule = JSON.parse(request.responseText);
+				var data = "<table id='jager' data-role='table'>";
+			for (i = 0; i < schedule.length; i++) {
+				if (schedule[i].stage == "Jager" && schedule[i].dag == "afb") {
+				data += "<tr><th><img src='" + schedule[i].band + "' class='stage'>";
+				}
+				if (schedule[i].stage == "Jager" && schedule[i].dag == "vr") {
+				data += "<tr><td>" + schedule[i].uur + "<br>" + schedule[i].band + "</td></tr>";
+				}
+			}
+			data += "</table>";
+			var schedule = document.getElementById("vrjager");
+			schedule.innerHTML = data;
+			}
+		}
+		}
+		console.log("asking for schedule");
+		request.send();
+	}
+	
+	function loadScheduleDF() {
+			var request = new XMLHttpRequest();
+			request.open("GET", pathScheduleF, true);
+			request.onreadystatechange = function() {//Call a function when the state changes.
+			if (request.readyState == 4) {
+				if (request.status == 200 || request.status == 0) {
+	  
+				var schedule = JSON.parse(request.responseText);
+				var data = "<table id='large' data-role='table'>";
+			for (i = 0; i < schedule.length; i++) {
+				if (schedule[i].stage == "Dynamo" && schedule[i].dag == "afb") {
+				data += "<tr><th><img src='" + schedule[i].band + "' class='stage'>";
+				}
+				if (schedule[i].stage == "Dynamo" && schedule[i].dag == "vr") {
+				data += "<tr><td>" + schedule[i].uur + "<br>" + schedule[i].band + "</td></tr>";
+				}
+			}
+			data += "</table>";
+			var schedule = document.getElementById("vrdynamo");
+			schedule.innerHTML = data;
+			}
+		}
+		}
+		console.log("asking for schedule");
+		request.send();
+	}
+	
+	function loadScheduleRF() {
+			var request = new XMLHttpRequest();
+			request.open("GET", pathScheduleF, true);
+			request.onreadystatechange = function() {//Call a function when the state changes.
+			if (request.readyState == 4) {
+				if (request.status == 200 || request.status == 0) {
+	  
+				var schedule = JSON.parse(request.responseText);
+				var data = "<table id='jager' data-role='table'>";
+			for (i = 0; i < schedule.length; i++) {
+				if (schedule[i].stage == "Rambler" && schedule[i].dag == "img") {
+				data += "<tr><th><img src='" + schedule[i].band + "' class='stage'>";
+				}
+				if (schedule[i].stage == "Rambler" && schedule[i].dag == "vr") {
+				data += "<tr><td>" + schedule[i].uur + "<br>" + schedule[i].band + "</td></tr>";
+				}
+			}
+			data += "</table>";
+			var schedule = document.getElementById("vrrambler");
+			schedule.innerHTML = data;
+			}
+		}
+		}
+		console.log("asking for schedule");
+		request.send();
+	}
+	
+	function loadScheduleLS() {
+			var request = new XMLHttpRequest();
+			request.open("GET", pathScheduleF, true);
+			request.onreadystatechange = function() {//Call a function when the state changes.
+			if (request.readyState == 4) {
+				if (request.status == 200 || request.status == 0) {
+	  
+				var schedule = JSON.parse(request.responseText);
+				var data = "<table id='large' data-role='table'>";
+			for (i = 0; i < schedule.length; i++) {
+				if (schedule[i].stage == "Large" && schedule[i].dag == "afb") {
+				data += "<tr><th><img src='" + schedule[i].band + "' class='stage'>";
+				}
+				if (schedule[i].stage == "Large" && schedule[i].dag == "za") {
+				data += "<tr><td>" + schedule[i].uur + "<br>" + schedule[i].band + "</td></tr>";
+				}
+			}
+			data += "</table>";
+			var schedule = document.getElementById("zalarge");
+			schedule.innerHTML = data;
+			}
+		}
+		}
+		console.log("asking for schedule");
+		request.send();
+	}
+	
+	function loadScheduleJS() {
+			var request = new XMLHttpRequest();
+			request.open("GET", pathScheduleF, true);
+			request.onreadystatechange = function() {//Call a function when the state changes.
+			if (request.readyState == 4) {
+				if (request.status == 200 || request.status == 0) {
+	  
+				var schedule = JSON.parse(request.responseText);
+				var data = "<table id='jager' data-role='table'>";
+			for (i = 0; i < schedule.length; i++) {
+				if (schedule[i].stage == "Jager" && schedule[i].dag == "afb") {
+				data += "<tr><th><img src='" + schedule[i].band + "' class='stage'>";
+				}
+				if (schedule[i].stage == "Jager" && schedule[i].dag == "za") {
+				data += "<tr><td>" + schedule[i].uur + "<br>" + schedule[i].band + "</td></tr>";
+				}
+			}
+			data += "</table>";
+			var schedule = document.getElementById("zajager");
+			schedule.innerHTML = data;
+			}
+		}
+		}
+		console.log("asking for schedule");
+		request.send();
+	}
+	
+	function loadScheduleRS() {
+			var request = new XMLHttpRequest();
+			request.open("GET", pathScheduleF, true);
+			request.onreadystatechange = function() {//Call a function when the state changes.
+			if (request.readyState == 4) {
+				if (request.status == 200 || request.status == 0) {
+	  
+				var schedule = JSON.parse(request.responseText);
+				var data = "<table id='large' data-role='table'>";
+			for (i = 0; i < schedule.length; i++) {
+				if (schedule[i].stage == "Rambler" && schedule[i].dag == "afb") {
+				data += "<tr><th><img src='" + schedule[i].band + "' class='stage'>";
+				}
+				if (schedule[i].stage == "Rambler" && schedule[i].dag == "za") {
+				data += "<tr><td>" + schedule[i].uur + "<br>" + schedule[i].band + "</td></tr>";
+				}
+			}
+			data += "</table>";
+			var schedule = document.getElementById("zarambler");
+			schedule.innerHTML = data;
+			}
+		}
+		}
+		console.log("asking for schedule");
+		request.send();
+	}
+	function loadScheduleDS() {
+			var request = new XMLHttpRequest();
+			request.open("GET", pathScheduleF, true);
+			request.onreadystatechange = function() {//Call a function when the state changes.
+			if (request.readyState == 4) {
+				if (request.status == 200 || request.status == 0) {
+	  
+				var schedule = JSON.parse(request.responseText);
+				var data = "<table id='jager' data-role='table'>";
+			for (i = 0; i < schedule.length; i++) {
+				if (schedule[i].stage == "Dynamo" && schedule[i].dag == "img") {
+				data += "<tr><th><img src='" + schedule[i].band + "' class='stage'>";
+				}
+				if (schedule[i].stage == "Dynamo" && schedule[i].dag == "za") {
+				data += "<tr><td>" + schedule[i].uur + "<br>" + schedule[i].band + "</td></tr>";
+				}
+			}
+			data += "</table>";
+			var schedule = document.getElementById("zadynamo");
+			schedule.innerHTML = data;
+			}
+		}
+		}
+		console.log("asking for schedule");
+		request.send();
+	}
+	
+	function onError(e){
+		console.log("ERROR");
+		console.log(JSON.stringify(e));
+	}
+
+	function onDeviceReady() {
+		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFSSuccess, null);    
+	}
+
+	function init() {
+	document.addEventListener("deviceready", onDeviceReady, true);
+	}
+	</script>
+
+</head> 
+
+	
+<body onload="init();">
+<!-- Start of first page: #scheduleth -->
+
+<div data-theme="a" id="scheduleth" data-role="page" data-url="scheduleth">
+
+	<div data-role="header" class="ui-header ui-bar-a" role="banner" data-position="fixed" data-tap-toggle="false" data-id="head">
+		<div class="hd">
+			<a href="indexapp.html" data-ajax="false" title="Z33" class="Z33"><span style="display:none;" data-position="fixed">Z33</span></a>
+		</div>
+		<div data-role="navbar" class="schedule-nav">
+         	<ul class="sch-nav">
+                <li><a href="#scheduleth" id="th" class="ui-btn-active ui-state-persist">Thursday</a></li>
+                <li><a href="#schedulefr" id="fr">Friday</a></li>
+                <li><a href="#schedulesa" id="sa">Saturday</a></li>
+            </ul>
+    	</div>
+	</div><!-- /header -->
+
+	<div data-role="content" style="margin-top: 50px;">
+	<table align="center">
+		<tr><td valign="top"><table id='large'></table></td>
+		<td><table id='jager'></table></td></tr>
+	</table>
+	</div><!-- /content -->
+	
+	<div data-theme="a" data-role="footer" class="ui-footer ui-bar-d" role="banner" data-position="fixed" data-tap-toggle="false">
+		<div data-role="navbar" data-id="foo1" data-position="fixed" data-tap-toggle="false">
+		<ul>
+			<li><a href="indexapp.html" data-ajax="false" id="kwd"><div id="kw">News</div></a></li>
+			<li><a href="#scheduleth" class="ui-btn-active ui-state-persist" id="tsd"><div id="ts">Schedule</div></a></li>
+			<li><a href="#map" id="z33d"><div id="z33">Map</div></a></li>
+			<li><a id="ad" href="#" data-ajax="false" onclick="checkConnection();"><div id="a">Twitter</div></a></li>
+			<li><a href="#sponsors" id="upd"><div id="up">Sponsors</div></a></li>
+		</ul>
+	</div>
+	</div>
+	
+</div><!-- /page scheduleth -->
+
+<!-- Start of first page: #schedulefr -->
+
+<div data-theme="a" id="schedulefr" data-role="page" data-url="schedulefr">
+
+	<div data-role="header" class="ui-header ui-bar-a" role="banner" data-position="fixed" data-tap-toggle="false" data-id="head">
+		<div class="hd">
+			<a href="indexapp.html" data-ajax="false" title="Z33" class="Z33"><span style="display:none;" data-position="fixed">Z33</span></a>
+		</div>
+		<div data-role="navbar" class="schedule-nav">
+         	<ul class="sch-nav">
+                <li><a href="#scheduleth" id="th">Thursday</a></li>
+                <li><a href="#schedulefr" id="fr" class="ui-btn-active ui-state-persist">Friday</a></li>
+                <li><a href="#schedulesa" id="sa">Saturday</a></li>
+            </ul>
+    	</div>
+	</div><!-- /header -->
+
+	<div data-role="content" style="margin-top: 50px;">
+	<table align="center">
+		<tr><td valign="top"><table id='vrlarge'></table></td>
+		<td><table id='vrjager'></table></td></tr>
+		<tr><td valign="top"><table id='vrdynamo'></table></td>
+		<td valign="top"><table id='vrrambler'></table></td></tr>
+	</table>
+	</div><!-- /content -->
+	
+	<div data-theme="a" data-role="footer" class="ui-footer ui-bar-d" role="banner" data-position="fixed" data-tap-toggle="false">
+		<div data-role="navbar" data-id="foo1" data-position="fixed" data-tap-toggle="false">
+		<ul>
+			<li><a href="indexapp.html" data-ajax="false" id="kwd"><div id="kw">News</div></a></li>
+			<li><a href="#scheduleth" class="ui-btn-active ui-state-persist" id="tsd"><div id="ts">Schedule</div></a></li>
+			<li><a href="#map" id="z33d"><div id="z33">Map</div></a></li>
+			<li><a id="ad" href="#" data-ajax="false" onclick="checkConnection();"><div id="a">Twitter</div></a></li>
+			<li><a href="#sponsors" id="upd"><div id="up">Sponsors</div></a></li>
+		</ul>
+	</div>
+	</div>
+	
+</div><!-- /page schedulefr -->
+
+<!-- Start of first page: #schedulesa -->
+
+<div data-theme="a" id="schedulesa" data-role="page" data-url="schedulesa">
+
+	<div data-role="header" class="ui-header ui-bar-a" role="banner" data-position="fixed" data-tap-toggle="false" data-id="head">
+		<div class="hd">
+			<a href="indexapp.html" data-ajax="false" title="Z33" class="Z33"><span style="display:none;" data-position="fixed">Z33</span></a>
+		</div>
+		<div data-role="navbar" class="schedule-nav">
+         	<ul class="sch-nav">
+                <li><a href="#scheduleth" id="th">Thursday</a></li>
+                <li><a href="#schedulefr" id="fr">Friday</a></li>
+                <li><a href="#schedulesa" id="sa" class="ui-btn-active ui-state-persist">Saturday</a></li>
+            </ul>
+    	</div>
+	</div><!-- /header -->
+
+	<div data-role="content" style="margin-top: 50px;">
+	<table align="center">
+		<tr><td valign="top"><table id='zalarge'></table></td>
+		<td><table id='zajager'></table></td></tr>
+		<tr><td valign="top"><table id='zarambler'></table></td>
+		<td valign="top"><table id='zadynamo'></table></td></tr>
+	</table>
+	</div><!-- /content -->
+	
+	<div data-theme="a" data-role="footer" class="ui-footer ui-bar-d" role="banner" data-position="fixed" data-tap-toggle="false">
+		<div data-role="navbar" data-id="foo1" data-position="fixed" data-tap-toggle="false">
+		<ul>
+			<li><a href="indexapp.html" data-ajax="false" id="kwd"><div id="kw">News</div></a></li>
+			<li><a href="#scheduleth" class="ui-btn-active ui-state-persist" id="tsd"><div id="ts">Schedule</div></a></li>
+			<li><a href="#map" id="z33d"><div id="z33">Map</div></a></li>
+			<li><a id="ad" href="#" data-ajax="false" onclick="checkConnection();"><div id="a">Twitter</div></a></li>
+			<li><a href="#sponsors" id="upd"><div id="up">Sponsors</div></a></li>
+		</ul>
+	</div>
+	</div>
+	
+</div><!-- /page schedulesa -->
+
+<!-- Start of first page: #map -->
+
+<div data-theme="a" id="map" data-role="page" data-url="map">
+
+	<div data-role="header" class="ui-header ui-bar-a" role="banner" data-position="fixed" data-tap-toggle="false" data-id="head">
+	<div class="hd">
+		<a href="indexapp.html" data-ajax="false" title="Z33" class="Z33"><span style="display:none;" data-position="fixed">Z33</span></a>
+	</div>
+	</div><!-- /header -->
+
+	<div data-role="content">
+		<div class="maptekst">
+		<b>Effenaar</b><br>
+		Dommelstraat 2<br>
+		5611 CK Eindhoven<br>
+		The Netherlands<br><br>	
+		<b>Click on the map for a bigger version.</b><br><br>
+		</div>
+		<a href="#" onclick="window.open('file:///android_asset/www/images/map.jpg', '_system', ' ');"><img src="images/map.jpg" class="mapemm"></a>
+	</div><!-- /content -->
+	
+	<div data-theme="a" data-role="footer" class="ui-footer ui-bar-d" role="banner" data-position="fixed" data-tap-toggle="false">
+		<div data-role="navbar" data-id="foo1" data-position="fixed" data-tap-toggle="false">
+		<ul>
+			<li><a href="indexapp.html" data-ajax="false" id="kwd"><div id="kw">News</div></a></li>
+			<li><a href="#scheduleth"  id="tsd"><div id="ts">Schedule</div></a></li>
+			<li><a href="#map" class="ui-btn-active ui-state-persist" id="z33d"><div id="z33">Map</div></a></li>
+			<li><a id="ad" href="#" data-ajax="false" onclick="checkConnection();"><div id="a">Twitter</div></a></li>
+			<li><a href="#sponsors" id="upd"><div id="up">Sponsors</div></a></li>
+		</ul>
+	</div>
+	</div>
+	
+</div><!-- /page map -->
+
+<!-- Start of first page: #sponsors -->
+
+<div data-theme="a" id="sponsors" data-role="page" data-url="sponsors">
+
+	<div data-role="header" class="ui-header ui-bar-a" role="banner" data-position="fixed" data-tap-toggle="false" data-id="head">
+	<div class="hd">
+		<a href="indexapp.html" data-ajax="false" title="Z33" class="Z33"><span style="display:none;" data-position="fixed">Z33</span></a>
+	</div>
+	</div><!-- /header -->
+
+	<div data-role="content">
+	
+	<table id="home">
+		<tr><td colspan="2"><a href="http://www.jaegermeister.nl/" data-ajax="false"><img src="images/jagermeister.png" style="max-width: 365px;"></a></td></tr>
+		<tr><td colspan="2"><a href="http://www.large.nl" data-ajax="false"><img src="images/large.png" style="max-width: 365px;"></a></td></tr>
+		<tr><td><a href="http://www.aardschok.com/" data-ajax="false"><img src="images/aardschok.png" align="left" style="max-width: 140px;"></td>
+		<td><a href="http://www.metal-hammer.de/" data-ajax="false"><img src="images/metalhammer.png" align="right" style="max-width: 127px;"></a></td></tr>
+		<tr><td><a href="http://www.legacy.de/" data-ajax="false"><img src="images/legacy.png" align="left" style="max-width: 117px;"></a></td>
+		<td><a href="http://www.rocktribune.be/" data-ajax="false"><img src="images/rocktribune.png" align="right" style="max-width: 198px;"></a></td></tr>
+		<tr><td><a href="http://ztmag.com/" data-ajax="false"><img src="images/zerotolerance.png" align="left" style="max-width: 113px;"></a></td>
+		<td><a href="http://www.ghostcultmag.com/" data-ajax="false"><img src="images/GhostCult.png" align="right" style="max-width: 182px; opacity: 0.8;"></a></td></tr>
+		<tr><td><a href="http://www.tmr-music-promotions.com/" data-ajax="false"><img src="images/tmr.png" align="left" style="max-width: 94px;"></a></td>
+		<td><a href="http://www.printpalace.de/" data-ajax="false"><img src="images/printpalace.png" align="right" style="max-width: 81px;"></a></td></tr>
+		<tr><td><a href="http://www.lordsofmetal.nl/" data-ajax="false"><img src="images/lordsofmetal.png" align="left" style="max-width: 170px;"></a></td>
+		<td><a href="http://www.metalflirt.de/" data-ajax="false"><img src="images/metalflirt.png" align="right" style="max-width: 165px;"></a></td></tr>
+		<tr><td><a href="http://www.ticketmaster.nl/" data-ajax="false"><img src="images/ticketmaster.png" style="max-width: 185px;"></a></td>
+		<td><a href="http://www.hibana.be/" data-ajax="false"><img src="images/hibana.png" align="right" style="max-width: 185px;"></a></td></tr>
+	</table>
+	
+	</div><!-- /content -->
+	
+	<div data-theme="a" data-role="footer" class="ui-footer ui-bar-d" role="banner" data-position="fixed" data-tap-toggle="false">
+		<div data-role="navbar" data-id="foo1" data-position="fixed" data-tap-toggle="false">
+		<ul>
+			<li><a href="indexapp.html" data-ajax="false" id="kwd"><div id="kw">News</div></a></li>
+			<li><a href="#scheduleth" id="tsd"><div id="ts">Schedule</div></a></li>
+			<li><a href="#map" id="z33d"><div id="z33">Map</div></a></li>
+			<li><a id="ad" href="#" data-ajax="false" onclick="checkConnection();"><div id="a">Twitter</div></a></li>
+			<li><a href="#sponsors" class="ui-btn-active ui-state-persist" id="upd"><div id="up">Sponsors</div></a></li>
+		</ul>
+	</div>
+	</div>
+	
+</div><!-- /page sponsors -->
+<!-- Start of first page: #nowifi -->
+
+<div data-theme="a" id="nowifi" data-role="page" data-url="nowifi">
+
+	<div data-role="header" class="ui-header ui-bar-a" role="banner" data-position="fixed" data-tap-toggle="false" data-id="head">
+	<div class="hd">
+		<a href="indexapp.html" data-ajax="false" title="Z33" class="Z33"><span style="display:none;" data-position="fixed">Z33</span></a>
+	</div>
+	</div><!-- /header -->
+
+	<div data-role="content" id="wifi">
+	
+	<img src="images/nowifi.png" class="wifi">
+	<h2>No connection<h2>
+	<p>This page is not available.</p>
+	
+	</div><!-- /content -->
+	
+	<div data-theme="a" data-role="footer" class="ui-footer ui-bar-d" role="banner" data-position="fixed" data-tap-toggle="false">
+		<div data-role="navbar" data-id="foo1" data-position="fixed" data-tap-toggle="false">
+		<ul>
+			<li><a href="indexapp.html" data-ajax="false" id="kwd"><div id="kw">News</div></a></li>
+			<li><a href="#scheduleth" id="tsd"><div id="ts">Schedule</div></a></li>
+			<li><a href="#map" id="z33d"><div id="z33">Map</div></a></li>
+			<li><a id="ad" href="#" class="ui-btn-active ui-state-persist" data-ajax="false" onclick="checkConnection();"><div id="a">Twitter</div></a></li>
+			<li><a href="#sponsors" id="upd"><div id="up">Sponsors</div></a></li>
+		</ul>
+	</div>
+	</div>
+	
+</div><!-- /page nowifi -->
+
+</body>
+</html>
