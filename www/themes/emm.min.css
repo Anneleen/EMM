@@ -3564,7 +3564,7 @@ body{
 }
 
 .ui-header{
-	height: 64px;
+	height: 44px;
 	background: #000;
 }
 
@@ -3576,7 +3576,7 @@ body{
 	text-indent: -999px;
 	display: block;
 	padding: 0;
-	margin: 21px auto 2px auto;
+	margin: 2px auto 2px auto;
 }
 
 img.spl{
