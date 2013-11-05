@@ -17,7 +17,7 @@
 
 	//Loaded my file system, now let's get a directory entry for where I'll store my crap    
 	function onFSSuccess(fileSystem) {
-		fileSystem.root.getDirectory("Android/data/com.camden.imagedownloaddemo",{create:true},gotDir,onError);
+		fileSystem.root.getDirectory("com.camden.imagedownloaddemo",{create:true},gotDir,onError);
 	}
 
 	//The directory entry callback
@@ -68,9 +68,9 @@
 						var ft = new FileTransfer();
 						var dlPath = DATADIR.fullPath + "/" + res[i];
 						console.log("downloading crap to " + dlPath);
-						ft.download("http://www.raymondcamden.com/demos/2012/jan/17/" + escape(res[i]), dlPath, function(){
-							renderPicture(dlPath);
-							console.log("Successful download");
+						ft.download("http://www.raymondcamden.com/demos/2012/jan/17/" + escape(res[i]), dlPath, function(e){
+							renderPicture(e.fullPath);
+							console.log("Successful download of "+e.fullPath);
 						}, onError);
 					}
 				}
