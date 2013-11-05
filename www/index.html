@@ -11,81 +11,81 @@
 	<script stype="text/javascript" src="phonegap.js"></script> 
 
 	<script type="text/javascript" charset="utf-8">
-//Global instance of DirectoryEntry for our data
-var DATADIR;
+	//Global instance of DirectoryEntry for our data
+	var DATADIR;
 
-//Loaded my file system, now let's get a directory entry for where I'll store my crap    
-function onFSSuccess(fileSystem) {
-    fileSystem.root.getDirectory("be.emm.mobile",{create:true},gotDir,onError);
-}
+	//Loaded my file system, now let's get a directory entry for where I'll store my crap    
+	function onFSSuccess(fileSystem) {
+		fileSystem.root.getDirectory("be.emm.mobile",{create:true},gotDir,onError);
+	}
 
-//The directory entry callback
-function gotDir(d){
-    console.log("got dir");
-    DATADIR = d;
-    var reader = DATADIR.createReader();
-    reader.readEntries(function(d){
-        gotFiles(d);
-        appReady();
-    },onError);
-}
+	//The directory entry callback
+	function gotDir(d){
+		console.log("got dir");
+		DATADIR = d;
+		var reader = DATADIR.createReader();
+		reader.readEntries(function(d){
+			gotFiles(d);
+			appReady();
+		},onError);
+	}
 
-//Result of reading my directory
-function gotFiles(entries) {
-    console.log("The dir has "+entries.length+" entries.");
-for (var i=0; i<entries.length; i++) {
-console.log(entries[i].name+' dir? '+entries[i].isDirectory);
-}
-}
+	//Result of reading my directory
+	function gotFiles(entries) {
+		console.log("The dir has "+entries.length+" entries.");
+	for (var i=0; i<entries.length; i++) {
+	console.log(entries[i].name+' dir? '+entries[i].isDirectory);
+	}
+	}
 
-function onError(e){
-    console.log("ERROR");
-    console.log(JSON.stringify(e));
-}
+	function onError(e){
+		console.log("ERROR");
+		console.log(JSON.stringify(e));
+	}
 
-function onDeviceReady() {
-    //what do we have in cache already?
-    $("#status").html("Checking your local cache....");    
-    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFSSuccess, null);    
-}
+	function onDeviceReady() {
+		//what do we have in cache already?
+		$("#status").html("Checking your local cache....");    
+		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFSSuccess, null);    
+	}
 
-function appReady(){
-    $("#status").html("Ready to check remote files...");
-    $.get("http://eindhovenmetalmeeting.nl/anneleen/download.json", {}, function(res) {
-        iif (res.length > 0) {
-            $("#status").html("Going to sync some images...");
-            for (var i = 0; i < res.length; i++) {
-                    console.log("need to download " + res[i]);
-                    var ft = new FileTransfer();
-                    var dlPath = DATADIR.fullPath + "/" + res[i];
-console.log("downloading crap to " + dlPath);
-ft.download("http://eindhovenmetalmeeting.nl/anneleen/" + escape(res[i]), dlPath, function(e){
-alert("poep");
-window.location = "indexapp.html";
-console.log("Successful download of "+e.fullPath);
-}, onError);
-            }
-        }
-        $("#status").html("");
-    }, "json");
+	function appReady(){
+		$("#status").html("Ready to check remote files...");
+		$.get("http://eindhovenmetalmeeting.nl/anneleen/download.json", {}, function(res) {
+			iif (res.length > 0) {
+				$("#status").html("Going to sync some images...");
+				for (var i = 0; i < res.length; i++) {
+						console.log("need to download " + res[i]);
+						var ft = new FileTransfer();
+						var dlPath = DATADIR.fullPath + "/" + res[i];
+	console.log("downloading crap to " + dlPath);
+	ft.download("http://eindhovenmetalmeeting.nl/anneleen/" + escape(res[i]), dlPath, function(e){
+	alert("poep");
+	window.location = "indexapp.html";
+	console.log("Successful download of "+e.fullPath);
+	}, onError);
+				}
+			}
+			$("#status").html("");
+		}, "json");
 
-}
+	}
 
-function init() {
-document.addEventListener("deviceready", onDeviceReady, true);
-}
-</script>
+	function init() {
+	document.addEventListener("deviceready", onDeviceReady, true);
+	}
+	</script>
 
-<script>
-document.addEventListener("deviceready", offlineReady, false);
+	<script>
+	document.addEventListener("deviceready", offlineReady, false);
 
-    function offlineReady() {
-        var networkState = navigator.connection.type;
-     	if (networkState == Connection.UNKNOWN || networkState == Connection.NONE || networkState == Connection.ETHERNET || networkState == Connection.CELL_2G){
-			window.location = "indexapp.html";
+		function offlineReady() {
+			var networkState = navigator.connection.type;
+			if (networkState == Connection.UNKNOWN || networkState == Connection.NONE || networkState == Connection.ETHERNET || networkState == Connection.CELL_2G){
+				window.location = "indexapp.html";
+			}
 		}
-    }
-</script>
+	</script>
 </head> 
 
 	
