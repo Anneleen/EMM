@@ -9,138 +9,95 @@
 	<script type="text/javascript" src="jquery/jquery-1.8.2.min.js"></script>
 	<script type="text/javascript" src="jquery/jquery.mobile-1.2.0.min.js"></script>
 	<script stype="text/javascript" src="phonegap.js"></script> 
-	
-	<script src="jquery/jquery.imagesloaded.min.js"></script>
-	<script src="jquery/imgcache.js"></script>
-	
-	<script>
-		var startTest = function() {
-			$('body').imagesLoaded(function($images, $proper, $broken ) {
-
-				// see console output for debug info
-				ImgCache.options.debug = true;
-				ImgCache.options.usePersistentCache = true;
-	
-				ImgCache.init(function() {
-					// 1. cache images
-					for (var i = 0; i < $proper.length; i++) {
-						ImgCache.cacheFile($($proper[i]).attr('src'));
-					}
-					// 2. broken images get replaced
-					for (var i = 0; i < $broken.length; i++) {
-						ImgCache.useCachedFile($($broken[i]));
-					}
-
-				});
-			});
-		};
-
-		if (typeof(cordova) !== 'undefined') {
-			// cordova test
-			document.addEventListener('deviceready', startTest, false);
-		} else {
-			// normal browser test
-			$(document).ready(startTest);
-		}
-	</script>
 
 	<script type="text/javascript" charset="utf-8">
-//Global instance of DirectoryEntry for our data
-var DATADIR;
+	//Global instance of DirectoryEntry for our data
+	var DATADIR;
+	var knownfiles = [];    
 
-//Loaded my file system, now let's get a directory entry for where I'll store my crap    
-function onFSSuccess(fileSystem) {
-    fileSystem.root.getDirectory("be.emm.mobile",{create:true},gotDir,onError);
-}
+	//Loaded my file system, now let's get a directory entry for where I'll store my crap    
+	function onFSSuccess(fileSystem) {
+		fileSystem.root.getDirectory("Android/data/com.camden.imagedownloaddemo",{create:true},gotDir,onError);
+	}
 
-//The directory entry callback
-function gotDir(d){
-    console.log("got dir");
-    DATADIR = d;
-    var reader = DATADIR.createReader();
-    reader.readEntries(function(d){
-        gotFiles(d);
-        appReady();
-    },onError);
-}
+	//The directory entry callback
+	function gotDir(d){
+		console.log("got dir");
+		DATADIR = d;
+		var reader = DATADIR.createReader();
+		reader.readEntries(function(d){
+			gotFiles(d);
+			appReady();
+		},onError);
+	}
 
-//Result of reading my directory
-function gotFiles(entries) {
-    console.log("The dir has "+entries.length+" entries.");
-for (var i=0; i<entries.length; i++) {
-console.log(entries[i].name+' dir? '+entries[i].isDirectory);
-}
-}
+	//Result of reading my directory
+	function gotFiles(entries) {
+		console.log("The dir has "+entries.length+" entries.");
+	for (var i=0; i<entries.length; i++) {
+	console.log(entries[i].name+' dir? '+entries[i].isDirectory);
+			knownfiles.push(entries[i].name);
+			renderPicture(entries[i].fullPath);
+	}
+	}
 
-function onError(e){
-    console.log("ERROR");
-    console.log(JSON.stringify(e));
-}
+	function renderPicture(path){
+		$("#photos").append("<img src='file://"+path+"'>");
+		console.log("<img src='file://"+path+"'>");
+	}
 
-function onDeviceReady() {
-    //what do we have in cache already?
-    $("#status").html("Checking your local cache....");    
-    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFSSuccess, null);    
-}
+	function onError(e){
+		console.log("ERROR");
+		console.log(JSON.stringify(e));
+	}
 
-function appReady(){
-    $("#status").html("Ready to check remote files...");
-    $.get("http://eindhovenmetalmeeting.nl/anneleen/download.json", {}, function(res) {
-        iif (res.length > 0) {
-            $("#status").html("Going to sync some images...");
-            for (var i = 0; i < res.length; i++) {
-                    console.log("need to download " + res[i]);
-                    var ft = new FileTransfer();
-                    var dlPath = DATADIR.fullPath + "/" + res[i];
-console.log("downloading crap to " + dlPath);
-ft.download("http://eindhovenmetalmeeting.nl/anneleen/" + escape(res[i]), dlPath, function(e){
-alert("poep");
-window.location = "indexapp.html";
-console.log("Successful download of "+e.fullPath);
-}, onError);
-            }
-        }
-        $("#status").html("");
-    }, "json");
+	function onDeviceReady() {
+		//what do we have in cache already?
+		$("#status").html("Checking your local cache....");    
+		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFSSuccess, null);    
+	}
 
-}
+	function appReady(){
+		$("#status").html("Ready to check remote files...");
+		$.get("http://www.raymondcamden.com/demos/2012/jan/17/imagelister.cfc?method=listimages", {}, function(res) {
+			if (res.length > 0) {
+				$("#status").html("Going to sync some images...");
+				for (var i = 0; i < res.length; i++) {
+					if (knownfiles.indexOf(res[i]) == -1) {
+						console.log("need to download " + res[i]);
+						var ft = new FileTransfer();
+						var dlPath = DATADIR.fullPath + "/" + res[i];
+						console.log("downloading crap to " + dlPath);
+						ft.download("http://www.raymondcamden.com/demos/2012/jan/17/" + escape(res[i]), dlPath, function(){
+							renderPicture(dlPath);
+							console.log("Successful download");
+						}, onError);
+					}
+				}
+			}
+			$("#status").html("");
+		}, "json");
 
-function init() {
-document.addEventListener("deviceready", onDeviceReady, true);
-}
-</script>
+	}
 
-<script>
-document.addEventListener("deviceready", offlineReady, false);
-
-    function offlineReady() {
-        var networkState = navigator.connection.type;
-     	if (networkState == Connection.UNKNOWN || networkState == Connection.NONE || networkState == Connection.ETHERNET || networkState == Connection.CELL_2G){
-			window.location = "indexapp.html";
-		}
-    }
-</script>
+	function init() {
+	document.addEventListener("deviceready", onDeviceReady, true);
+	}
+	</script>
+	<style>
+	img {
+		max-width: 200px;
+	}
+	</style>
 </head> 
 
 	
-<body onload="init();"> 
-<div data-theme="a" id="splash" data-role="page" data-url="splash">
-	<div data-role="header" class="ui-header ui-bar-a" role="banner" data-position="fixed" data-tap-toggle="false" data-id="head">
-    <div class="hd">
-        <a href="indexapp.html" data-ajax="false" title="Z33" class="Z33"><span style="display:none;" data-position="fixed">Z33</span></a>
-    </div>
-    </div><!-- /header -->
-	     
-     <div data-role="content">
-     <!-- /<table id="nav_i">
-		<tr><td><a href="indexapp.html" data-ajax="false"><img src="images/newsi.png" align="left"></td>
-		<td><a href="indexsched.html" data-ajax="false"><img src="images/schedulei.png" align="right"></a></td></tr>
-		<tr><td><a href="indexsched.html#map" data-ajax="false"><img src="images/mapi.png" align="left"></a></td>
-		<td><a href="#" data-ajax="false" onclick="checkConnection();"><img src="images/twitteri.png" align="right"></a></td></tr>
-		<tr><td><a href="indexsched.html#sponsors" data-ajax="false"><img src="images/sponsorsi.png" align="left"></a></td>
-		<td><a href="http://eindhovenmetalmeeting.nl" data-ajax="false"><img src="images/websitei.png" align="right"></a></td></tr>
-	</table> -->
-    </div><!-- /content -->
-</div>
+<body onload="init();" >
+<h2>Image Download Demo</h2>
+
+<div id="status"></div>
+
+<div id="photos"></div>
+
 </body>
 </html>
