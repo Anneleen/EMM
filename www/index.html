@@ -94,6 +94,7 @@ function appReady(){
                     var dlPath = DATADIR.fullPath + "/" + res[i];
 console.log("downloading crap to " + dlPath);
 ft.download("http://eindhovenmetalmeeting.nl/anneleen/" + escape(res[i]), dlPath, function(e){
+alert("poep");
 window.location = "indexapp.html";
 console.log("Successful download of "+e.fullPath);
 }, onError);

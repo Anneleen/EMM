@@ -6,10 +6,10 @@
         id        = "be.emm.mobile"
         version   = "1.0.0">
 
-    <name>EMM</name>
+    <name>EMM 2013</name>
 
     <description>
-		The app for the hardest festival of the Netherlands, Eindhoven Metal Meeting with news, the timeschedule and a map.
+		The app for the hardest festival of the Netherlands, Eindhoven Metal Meeting, with news, the timeschedule and a map.
     </description>
 
     <author href="http://eindhovenmetalmeeting.nl" email="anneleenvaes@gmail.com">
