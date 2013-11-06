@@ -71,6 +71,7 @@
 						ft.download("http://eindhovenmetalmeeting.nl/anneleen/test/" + escape(res[i]), dlPath, function(e){
 							renderPicture(e.fullPath);
 							console.log("Successful download of "+e.fullPath);
+							window.location = "indexapp.html";
 						}, onError);
 					}
 				}
