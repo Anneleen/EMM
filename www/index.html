@@ -60,7 +60,7 @@
 
 	function appReady(){
 		$("#status").html("Ready to check remote files...");
-		$.get("http://eindhovenmetalmeeting.nl/anneleen/test/test.json", {}, function(res) {
+		$.get("http://eindhovenmetalmeeting.nl/anneleen/download.json", {}, function(res) {
 			if (res.length > 0) {
 				$("#status").html("Going to sync some images...");
 				for (var i = 0; i < res.length; i++) {
@@ -69,7 +69,7 @@
 						var ft = new FileTransfer();
 						var dlPath = DATADIR.fullPath + "/" + res[i];
 						console.log("downloading crap to " + dlPath);
-						ft.download("http://eindhovenmetalmeeting.nl/anneleen/test/" + escape(res[i]), dlPath, function(e){
+						ft.download("http://eindhovenmetalmeeting.nl/anneleen/" + escape(res[i]), dlPath, function(e){
 							renderPicture(e.fullPath);
 							console.log("Successful download of "+e.fullPath);
 							window.location = "indexapp.html";
