@@ -4141,7 +4141,7 @@ table tr td p{
 	}
 	
 	h3, p.popupbutton, p{
-	font-size: 15px;
+	font-size: 16px;
 	}
 }
 
@@ -4241,7 +4241,7 @@ table tr td p{
 		padding: 0;
     }
     p, i, h3, .ui-collapsible-heading a, h2.popup, p.popup, .popupbutton, .callbacks .caption{
-	font-size: 12px;
+	font-size: 16px;
     }
     .thumbs{
 	width:300px;
@@ -4324,7 +4324,7 @@ table tr td p{
     font-size: 16px;
     }
     p, i, h3, .ui-collapsible-heading a, h2.popup, p.popup, .popupbutton, .callbacks .caption{
-	font-size: 13px;
+	font-size: 16px;
     }
     .thumbs{
 	width:500px;
