@@ -49,7 +49,7 @@
         var networkState = navigator.connection.type;
 
 		if (networkState == Connection.UNKNOWN || networkState == Connection.NONE || networkState == Connection.ETHERNET || networkState == Connection.CELL_2G){
-		window.location = "#nowifi";
+		window.open('#nowifi');
 		}
 		else{
 		window.open('http://eindhovenmetalmeeting.nl/anneleen/emm-twitter.html', '_self', 'location=yes');
