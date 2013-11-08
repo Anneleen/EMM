@@ -97,7 +97,6 @@
     <access origin="https://twitter.com" subdomains="true" />
 	<access origin="http://twitter.com" subdomains="true" />
 	<access origin="https://mobile.twitter.com" subdomains="true" />
-	<access origin="https://mobile.twitter.com/search?q=%23emm13&s=hash" />
 	<access origin="http://platform.twitter.com" subdomains="true" />
 	<access origin="https://platform.twitter.com" subdomains="true" />
 	<access origin="https://cdn.syndication.twimg.com" />
