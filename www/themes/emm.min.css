@@ -3910,7 +3910,7 @@ table#home, table#nav_i{
 	margin: 0 auto;
 }
 
-table#home td img, table#nav_i td img, table#large th img, table#jager th img{
+table#home td img, table#nav_i td img, table#large th img, table#jager th img, table#vrlarge th img, table#vrjager th img, table#vrdynamo th img, table#vrrambler th img, table#zalarge th img, table#zajager th img, table#zarambler th img, table#zadynamo th img{
 	width: 100%;
 	height: auto;
 	margin: 0;
@@ -3924,18 +3924,18 @@ table#home td img, table#nav_i td img, table#large th img, table#jager th img{
 	text-align: center;
 }
 
-table#large, table#jager{
+table#large, table#jager, table#vrlarge th img, table#vrjager th img, table#vrdynamo th img, table#vrrambler th img, table#zalarge th img, table#zajager th img, table#zarambler th img, table#zadynamo th img{
 	margin: 0 auto;
 	max-width: 100%;
 	float: left;
 }
 
-table#large tbody,table#jager tbody{
+table#large tbody,table#jager tbody, table#vrlarge tbody, table#vrjager tbody, table#vrdynamo tbody, table#vrrambler tbody, table#zalarge tbody, table#zajager tbody, table#zarambler tbody, table#zadynamo tbody{
 	text-align: center;
 	font-size: 14px;
 }
 
-table#large tr td, table#jager tr td{
+table#large tr td, table#jager tr td, table#vrlarge tr td, table#vrjager tr td, table#vrdynamo tr td, table#vrrambler tr td, table#zalarge tr td, table#zajager tr td, table#zarambler tr td, table#zadynamo tr td{
 	background: #fff;
 	font-weight: bold;
 	border: 2px solid #000000;
